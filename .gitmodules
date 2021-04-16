@@ -1,9 +1,9 @@
 [submodule "arduino/packages/portenta-tools"]
 	path = arduino/packages/portenta-tools
-	url = https://github.com/arduino/ArduinoCore-mbed
+	url = https://github.com/ardnew/ArduinoCore-mbed
 [submodule "mbed/cli"]
 	path = mbed/cli
-	url = https://github.com/ARMmbed/mbed-cli
+	url = https://github.com/ardnew/mbed-cli
 [submodule "mbed/os"]
 	path = mbed/os
-	url = https://github.com/ARMmbed/mbed-os
+	url = https://github.com/ardnew/mbed-os
