@@ -25,8 +25,8 @@ install-core() {
 	echo "--- INSTALLING PORTENTA H7 CORE"
 	echo "---"
 	push "${platform}" &> /dev/null
-	mkdir -p "variants/${variant}/libs" || exit 4
-	cp -v "${build_path}/${build_name}" "${PWD}/variants/${variant}/libs/${core_name}" || exit 5
+	mkdir -p "${platform}/variants/${variant}/libs" || exit 4
+	cp -v "${build_path}/${build_name}" "${platform}/variants/${variant}/libs/${core_name}" || exit 5
 	popd &> /dev/null
 }
 
