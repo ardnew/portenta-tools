@@ -57,9 +57,11 @@ If you decide to forgo both Mbed and Arduino, care must be taken to not corrupt 
 
 I feared my Portenta was bricked when I first encountered this situation because, apart from the above symptoms, any attempt to connect to it using my Segger JLink EDU Mini over the JTAG/SWD interface would also fail (using `JLinkGDBServer`, `JFlash`, and `JLinkSTM32`).
 
-Finally, using the embedded ST-Link on an STM32 Nucleo-G071RB, OpenOCD, and some haphazardly-attached jumper cables, I managed to restore the bootloader. Of course, you must remember to use [the correct pinout](extra/jtag-pinout-corrected.png) (not the Arduino docs) when connecting the ST-Link's SWD header to the Portenta Breakout. Also note that if you are using an embedded ST-Link included on a Nucleo-64/144 device, you **must** remove the two jumpers labeled `ST-LINK` on one side, `NUCLEO` on the other, located next to the SWD header. My setup looked like the following:
+Finally, using the embedded ST-Link on an STM32 Nucleo-G071RB, OpenOCD, and some haphazardly-attached jumper cables, I managed to restore the bootloader. Of course, you must remember to use [the correct pinout](extra/jtag-pinout-corrected.png) (not the Arduino docs) when connecting the ST-Link's SWD header to the Portenta Breakout. My setup looked like the following:
 
 ![Embedded ST-Link on Nucleo used to program Portenta bootloader](extra/nucleo-st-link-portenta.jpg)
+
+- Also note that if you are using an embedded ST-Link included on a Nucleo-64/144 device, you **must** remove the two jumpers labeled `ST-LINK` on one side, `NUCLEO` on the other, located next to the SWD header. 
 
 ### Bash script to reprogram bootloader
 
