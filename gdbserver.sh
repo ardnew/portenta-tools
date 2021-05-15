@@ -17,7 +17,7 @@ openocd-command() {
 			cmd="${cmd};"
 	done
 	cat <<__CMD__ | tr '\n' ';'
-    tcl_port disabled
+		tcl_port disabled
 		telnet_port disabled
 		init
 		reset init
