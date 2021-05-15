@@ -27,7 +27,7 @@ And finally, run the build script:
 
 ```sh
 cd portenta-tools
-./build.sh
+bash ./build.sh
 ```
 
 This should generate a new Arduino Portenta H7 core with debug symbols at `/tmp/mbed-os-program/BUILD/mbed-core-PORTENTA_H7_M7.a`. If everything built correctly, you should now have a much larger static library `.a` archive - roughly 1.6GiB.
@@ -47,28 +47,42 @@ But, just to keep you on your toes, they throw a couple curveballs:
 
 ## Reprogramming Portenta H7 Bootloader
 
-If you decide to forgo both Mbed and Arduino, care must be taken to not corrupt the system bootloader. If corrupted, there is no way to restore access to the device without an external programmer and access to pins on the high-density connectors (such as with the [Arduino Portenta Breakout board mentioned above](README.md#portenta-h7-jtag-swd-interface)). Symptoms of a corrupt bootloader are:
-1. USB (DFU), USART, I²C, SPI, CAN bootloader interfaces are not initialized.
-    - This means the device will not be detected by any PC when plugged in to any USB port, nor will it communicate using any of the other serial interfaces (USART, I²C, SPI, or CAN). 
-    - Simply put: **the device will not boot existing firmware, and there is no way to flash it with new firmware**.
-2. The orange LED (`CHG` circuit) to the left of the USB-C connector remains solidly illuminated - no blinking or fading - with a *very* slight flicker every ~15 seconds or so (almost imperceptible).
-3. The Portenta does not respond when pressing the reset button with either single- or double-tap (double-tapping the reset button normally puts the device in bootloader mode). The orange LED remains solidly illuminated when pressing reset, and the counter that triggers that slight 15-second flicker does not reset, indicating the reset button presses are not detected at all.
-    - Similarly, setting the `BT SEL` and `BOOT` DIP switches on the Portenta Breakout board have no effect - the device will not be put into bootloader mode.
+To reprogram the Portenta bootloader, you will need an external programmer and access to pins on the high-density connectors (or use the JTAG/SWD header on the [Arduino Portenta Breakout board mentioned above](README.md#portenta-h7-jtag-swd-interface)). 
 
-I feared my Portenta was bricked when I first encountered this situation because, apart from the above symptoms, any attempt to connect to it using my Segger JLink EDU Mini over the JTAG/SWD interface would also fail (using `JLinkGDBServer`, `JFlash`, and `JLinkSTM32`).
+#### ST-Link
 
-Finally, using the embedded ST-Link on an STM32 Nucleo-G071RB, OpenOCD, and some haphazardly-attached jumper cables, I managed to restore the bootloader. Of course, you must remember to use [the correct pinout](extra/jtag-pinout-corrected.png) (not the Arduino docs) when connecting the ST-Link's SWD header to the Portenta Breakout. My setup looked like the following:
+To use an ST-Link to reprogram the Portenta bootloader, you can use the script [`flash-bootloader.sh`](flash-bootloader.sh), which uses OpenOCD and the Portenta bootloader firmware included in this repo. Once you've connected your ST-Link to the Portenta Breakout via JTAG/SWD headers, perform the following steps.
 
-![Embedded ST-Link on Nucleo used to program Portenta bootloader](extra/nucleo-st-link-portenta.jpg)
-
-- Also note that if you are using an embedded ST-Link included on a Nucleo-64/144 device, you **must** remove the two jumpers labeled `ST-LINK` on one side, `NUCLEO` on the other, located next to the SWD header. 
-
-### Bash script to reprogram bootloader
-
-To use an ST-Link to reprogram the Portenta bootloader, you can use the script [`flash-bootloader.sh`](flash-bootloader.sh), which uses the OpenOCD and Portenta firmware included in this repo. Once you've connected your ST-Link to the Portenta Breakout via JTAG/SWD headers, run the following:
-
-```
+Clone this repo:
+```sh
 git clone --recurse-submodules https://github.com/ardnew/portenta-tools
+```
+
+Run the flash bootloader script:
+```
 cd portenta-tools
 bash ./flash-bootloader.sh
 ```
+
+#### Embedded ST-Link on Nucleo-64/144
+
+It is also possible to use the embedded ST-Link onboard STM32 Nucleo-64/144 devices (but not Nucleo-32!). There is usually a breadboard-style SWD header that you can connect to the JTAG/SWD header on the Portenta Breakout. The image below shows how to connect the ST-Link v2.1 on an STM32 Nucleo-G071RB.
+
+ - Note that you **must** remove the two jumpers labeled `ST-LINK` on one side, `NUCLEO` on the other, located next to the SWD header.
+ - This setup can also be used for source-level debugging via OpenOCD's `gdbserver`!
+
+![Embedded ST-Link on Nucleo used to program Portenta bootloader](extra/nucleo-st-link-portenta.jpg)
+
+#### Segger JLink
+
+While I was able to use my Segger JLink EDU Mini to flash new firmware to the device and debug via `gdbserver`, I never managed to use it to reprogram a *corrupted* bootloader, although I have no doubt it is possible. So I do not have instructions at the moment for JLink.
+
+### Corrupted bootloader
+
+With a corrupt bootloader, there is no way to restore access to the device without [reprogramming the bootloader](README.md#reprogramming-portenta-h7-bootloader). Symptoms of a corrupt bootloader are:
+ 1. USB (DFU), USART, I²C, SPI, CAN bootloader interfaces are not initialized.
+    - This means the device will not be detected by any PC when plugged in to any USB port, nor will it communicate using any of the other serial interfaces (USART, I²C, SPI, or CAN). 
+    - Simply put: **the device will not boot existing firmware, and there is no way to flash it with new firmware**.
+ 2. The orange LED (`CHG` circuit) to the left of the USB-C connector remains solidly illuminated - no blinking or fading - with a *very* slight flicker every ~15 seconds or so (almost imperceptible).
+ 3. The Portenta does not respond when pressing the reset button with either single- or double-tap (double-tapping the reset button normally puts the device in bootloader mode). The orange LED remains solidly illuminated when pressing reset, and the counter that triggers that slight 15-second flicker does not reset, indicating the reset button presses are not detected at all.
+    - Similarly, setting the `BT SEL` and `BOOT` DIP switches on the Portenta Breakout board have no effect - the device will not be put into bootloader mode.
