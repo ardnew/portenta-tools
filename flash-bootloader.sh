@@ -14,10 +14,11 @@ if [[ ! -f "${boot_elf}" ]]; then
 	exit 1
 fi
 
-openocd_path="${tools_path}/openocd"
+#openocd_path="${tools_path}/openocd"
+openocd_path="/usr/local/openocd"
 openocd_bin="${openocd_path}/bin/openocd"
 openocd_src="${openocd_path}/share/openocd/scripts"
-openocd_interface='interface/stlink.cfg'
+openocd_interface='interface/jlink.cfg'
 openocd_target='target/stm32h7x_dual_bank.cfg'
 
 openocd_cmd_bootopt='stm32h7x option_write 0 0x01c 0xb86aaf0'

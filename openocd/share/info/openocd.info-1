@@ -1,7 +1,7 @@
-This is openocd.info, produced by makeinfo version 6.5 from
+This is openocd.info, produced by makeinfo version 6.7 from
 openocd.texi.
 
-This User's Guide documents release 0.11.0+dev, dated 9 March 2021, of
+This User's Guide documents release 0.11.0+dev, dated 19 May 2021, of
 the Open On-Chip Debugger (OpenOCD).
 
    * Copyright (C) 2008 The OpenOCD Project
@@ -27,7 +27,7 @@ File: openocd.info,  Node: Top,  Next: About,  Up: (dir)
 OpenOCD User's Guide
 ********************
 
-This User's Guide documents release 0.11.0+dev, dated 9 March 2021, of
+This User's Guide documents release 0.11.0+dev, dated 19 May 2021, of
 the Open On-Chip Debugger (OpenOCD).
 
    * Copyright (C) 2008 The OpenOCD Project
@@ -291,12 +291,7 @@ Defined: dongle: A small device that plugs into a computer and serves as
 an adapter ....  [snip]
 
 In the OpenOCD case, this generally refers to a small adapter that
-attaches to your computer via USB or the parallel port.  One exception
-is the Ultimate Solutions ZY1000, packaged as a small box you attach via
-an ethernet cable.  The ZY1000 has the advantage that it does not
-require any drivers to be installed on the developer PC. It also has a
-built in web interface.  It supports RTCK/RCLK or adaptive clocking and
-has a built-in relay to power cycle targets remotely.
+attaches to your computer via USB or the parallel port.
 
 2.1 Choosing a Dongle
 =====================
@@ -316,27 +311,7 @@ There are several things you should keep in mind when choosing a dongle.
   5. RTCK Do you expect to use it with ARM chips and boards with RTCK
      support (also known as "adaptive clocking")?
 
-2.2 Stand-alone JTAG Probe
-==========================
-
-The ZY1000 from Ultimate Solutions is technically not a dongle but a
-stand-alone JTAG probe that, unlike most dongles, doesn't require any
-drivers running on the developer's host computer.  Once installed on a
-network using DHCP or a static IP assignment, users can access the
-ZY1000 probe locally or remotely from any host with access to the IP
-address assigned to the probe.  The ZY1000 provides an intuitive web
-interface with direct access to the OpenOCD debugger.  Users may also
-run a GDBSERVER directly on the ZY1000 to take full advantage of GCC &
-GDB to debug any distribution of embedded Linux or NetBSD running on the
-target.  The ZY1000 supports RTCK & RCLK or adaptive clocking and has a
-built-in relay to power cycle the target remotely.
-
-For more information, visit:
-
-ZY1000 See:
-<http://www.ultsol.com/index.php/component/content/article/8/210-zylin-zy1000-main>
-
-2.3 USB FT2232 Based
+2.2 USB FT2232 Based
 ====================
 
 There are many USB JTAG dongles on the market, many of them based on a
@@ -411,7 +386,7 @@ built-in low-cost debug adapter and USB-to-serial solution.
      <http://shop.gateworks.com/index.php?route=product/product&path=70_80&product_id=64>
      FT2232H-based
 
-2.4 USB-JTAG / Altera USB-Blaster compatibles
+2.3 USB-JTAG / Altera USB-Blaster compatibles
 =============================================
 
 These devices also show up as FTDI devices, but are not
@@ -429,7 +404,7 @@ product.  The driver can be configured to search for any VID/PID pair
    * Altera USB-Blaster
      Link: <http://www.altera.com/literature/ug/ug_usb_blstr.pdf>
 
-2.5 USB J-Link based
+2.4 USB J-Link based
 ====================
 
 There are several OEM versions of the SEGGER J-Link adapter.  It is an
@@ -442,7 +417,7 @@ internally.
      Link: <http://www.atmel.com/tools/atmelsam-ice.aspx>
    * IAR J-Link
 
-2.6 USB RLINK based
+2.5 USB RLINK based
 ===================
 
 Raisonance has an adapter called RLink.  It exists in a stripped-down
@@ -458,7 +433,7 @@ JTAG, thus not supported.
    * STM32 Primer2
      Link: <http://www.stm32circle.com/resources/stm32primer2.php>
 
-2.7 USB ST-LINK based
+2.6 USB ST-LINK based
 =====================
 
 STMicroelectronics has an adapter called ST-LINK. They only work with
@@ -483,7 +458,7 @@ to ignore the ST-LINK using one of the following methods:
    * modprobe -r usb-storage && modprobe usb-storage quirks=483:3744:i
    * add "options usb-storage quirks=483:3744:i" to /etc/modprobe.conf
 
-2.8 USB TI/Stellaris ICDI based
+2.7 USB TI/Stellaris ICDI based
 ===============================
 
 Texas Instruments has an adapter called ICDI. It is not to be confused
@@ -491,7 +466,7 @@ with the FTDI based adapters that were originally fitted to their
 evaluation boards.  This is the adapter fitted to the Stellaris
 LaunchPad.
 
-2.9 USB Nuvoton Nu-Link
+2.8 USB Nuvoton Nu-Link
 =======================
 
 Nuvoton has an adapter called Nu-Link.  It is available either as
@@ -499,14 +474,14 @@ stand-alone dongle and embedded on development boards.  It supports SWD,
 serial port bridge and mass storage for firmware update.  Both Nu-Link
 v1 and v2 are supported.
 
-2.10 USB CMSIS-DAP based
-========================
+2.9 USB CMSIS-DAP based
+=======================
 
 ARM has released a interface standard called CMSIS-DAP that simplifies
 connecting debuggers to ARM Cortex based targets
 <http://www.keil.com/support/man/docs/dapdebug/dapdebug_introduction.htm>.
 
-2.11 USB Other
+2.10 USB Other
 ==============
 
    * USBprog
@@ -542,7 +517,7 @@ connecting debuggers to ARM Cortex based targets
      Link:
      <https://software-dl.ti.com/ccs/esd/documents/xdsdebugprobes/emu_xds_software_package_download.html#xds110-support-utilities>
 
-2.12 IBM PC Parallel Printer Port Based
+2.11 IBM PC Parallel Printer Port Based
 =======================================
 
 The two well-known "JTAG Parallel Ports" cables are the Xilinx DLC5 and
@@ -592,7 +567,7 @@ USB-based ones.
      Link:
      <http://www.st.com/internet/com/TECHNICAL_RESOURCES/TECHNICAL_LITERATURE/DATA_BRIEF/DM00039500.pdf>
 
-2.13 Other...
+2.12 Other...
 =============
 
    * ep93xx
@@ -1980,7 +1955,7 @@ using one or more of these ports.  In such cases, just specify the
 relevant port number as "disabled".  If you disable all access through
 TCP/IP, you will need to use the command line '-pipe' option.
 
- -- Command: gdb_port [number]
+ -- Config Command: gdb_port [number]
      Normally gdb listens to a TCP/IP port, but GDB can also communicate
      via pipes(stdin/out or named pipes).  The name "gdb_port" stuck
      because it covers probably more than 90% of the normal use cases.
@@ -1991,10 +1966,6 @@ TCP/IP, you will need to use the command line '-pipe' option.
 
      When using "pipe", also use log_output to redirect the log output
      to a file so as not to flood the stdin/out pipes.
-
-     The -p/-pipe option is deprecated and a warning is printed as it is
-     equivalent to passing in -c "gdb_port pipe; log_output
-     openocd.log".
 
      Any other string is interpreted as named pipe to listen to.  Output
      pipe is the same name as input pipe, but with 'o' appended, e.g.
@@ -2014,7 +1985,7 @@ TCP/IP, you will need to use the command line '-pipe' option.
      insufficient timeout may cause initialization to fail with "Unknown
      remote qXfer reply: OK".
 
- -- Command: tcl_port [number]
+ -- Config Command: tcl_port [number]
      Specify or query the port used for a simplified RPC connection that
      can be used by clients to issue TCL commands and get the output
      from the Tcl engine.  Intended as a machine interface.  When not
@@ -2022,7 +1993,7 @@ TCP/IP, you will need to use the command line '-pipe' option.
      to 6666.  When specified as "disabled", this service is not
      activated.
 
- -- Command: telnet_port [number]
+ -- Config Command: telnet_port [number]
      Specify or query the port on which to listen for incoming telnet
      connections.  This port is intended for interaction with one human
      through TCL commands.  When not specified during the configuration
@@ -2180,7 +2151,7 @@ adapter.
  -- Command: adapter list
      List the debug adapter drivers that have been built into the
      running copy of OpenOCD.
- -- Command: adapter transports transport_name+
+ -- Config Command: adapter transports transport_name+
      Specifies the transports supported by this debug adapter.  The
      adapter driver builds-in similar knowledge; use this only when
      external configuration (such as jumpering) changes what the
@@ -2189,7 +2160,7 @@ adapter.
  -- Command: adapter name
      Returns the name of the debug adapter driver being used.
 
- -- Command: adapter usb location [<bus>-<port>[.<port>]...]
+ -- Config Command: adapter usb location [<bus>-<port>[.<port>]...]
      Displays or specifies the physical USB port of the adapter to use.
      The path roots at BUS and walks down the physical ports, with each
      PORT option specifying a deeper level in the bus topology, the last
@@ -2331,20 +2302,6 @@ when OpenOCD is configured, in order to be made available at run time.
           arbitrary Unicode strings, and are not restricted to
           containing only decimal digits.)
 
-      -- Config Command: ftdi_location <bus>-<port>[.<port>]...
-          _DEPRECATED - avoid using this.  Use the command *note adapter
-          usb location: adapter_usb_location. instead._
-
-          Specifies the physical USB port of the adapter to use.  The
-          path roots at BUS and walks down the physical ports, with each
-          PORT option specifying a deeper level in the bus topology, the
-          last PORT denoting where the target adapter is actually
-          plugged.  The USB bus topology can be queried with the command
-          _lsusb -t_.
-
-          This command is only available if your libusb1 is at least
-          version 1.0.16.
-
       -- Config Command: ftdi_channel channel
           Selects the channel of the FTDI device to use for MPSSE
           operations.  Most adapters use the default, channel 0, but
@@ -2360,9 +2317,9 @@ when OpenOCD is configured, in order to be made available at run time.
           floating inputs, conflicting outputs and initially asserted
           reset signals.
 
-      -- Config Command: ftdi_layout_signal name ['-data'|'-ndata'
-               data_mask] ['-input'|'-ninput' input_mask] ['-oe'|'-noe'
-               oe_mask] ['-alias'|'-nalias' name]
+      -- Command: ftdi_layout_signal name ['-data'|'-ndata' data_mask]
+               ['-input'|'-ninput' input_mask] ['-oe'|'-noe' oe_mask]
+               ['-alias'|'-nalias' name]
           Creates a signal with the specified NAME, controlled by one or
           more FTDI GPIO pins via a range of possible buffer
           connections.  The masks are FTDI GPIO register bitmasks to
@@ -2566,12 +2523,12 @@ when OpenOCD is configured, in order to be made available at run time.
                usb_blaster_pin pin6 s
                reset_config srst_only
 
-      -- Command: usb_blaster_lowlevel_driver ('ftdi'|'ublast2')
+      -- Config Command: usb_blaster_lowlevel_driver ('ftdi'|'ublast2')
           Chooses the low level access method for the adapter.  If not
           specified, 'ftdi' is selected unless it wasn't enabled during
           the configure stage.  USB-Blaster II needs 'ublast2'.
 
-      -- Command: usb_blaster_firmware PATH
+      -- Config Command: usb_blaster_firmware PATH
           This command specifies PATH to access USB-Blaster II firmware
           image.  To be used with USB-Blaster II only.
 
@@ -2646,7 +2603,7 @@ when OpenOCD is configured, in order to be made available at run time.
           EMUCOM channel 0x0:
                > jlink emucom read 0x0 4
                77a90000
-      -- Config: jlink usb <'0' to '3'>
+      -- Config Command: jlink usb <'0' to '3'>
           Set the USB address of the interface, in case more than one
           adapter is connected to the host.  If not specified, USB
           addresses are not considered.  Device selection via USB
@@ -2654,7 +2611,7 @@ when OpenOCD is configured, in order to be made available at run time.
           the serial number instead, if possible.
 
           As a configuration command, it can be used only before 'init'.
-      -- Config: jlink serial <serial number>
+      -- Config Command: jlink serial <serial number>
           Set the serial number of the interface, in case more than one
           adapter is connected to the host.  If not specified, serial
           numbers are not considered.
@@ -2762,7 +2719,7 @@ when OpenOCD is configured, in order to be made available at run time.
           of the parallel port: 'parport_port 0' (the default).  If
           'parport_port 0x378' is specified you may encounter a problem.
 
-      -- Command: parport_toggling_time [nanoseconds]
+      -- Config Command: parport_toggling_time [nanoseconds]
           Displays how many nanoseconds the hardware needs to toggle
           TCK; the parport driver uses this value to obey the 'adapter
           speed' configuration.  When the optional NANOSECONDS parameter
@@ -2849,6 +2806,15 @@ when OpenOCD is configured, in order to be made available at run time.
       -- Config Command: hla_vid_pid [vid pid]+
           Pairs of vendor IDs and product IDs of the device.
 
+      -- Config Command: hla_stlink_backend (usb | tcp [port])
+          _ST-Link only:_ Choose between 'exclusive' USB communication
+          (the default backend) or 'shared' mode using ST-Link TCP
+          server (the default port is 7184).
+
+          _Note:_ ST-Link TCP server is a binary application provided by
+          ST available from ST-LINK server software module
+          (https://www.st.com/en/development-tools/st-link-server.html).
+
       -- Command: hla_command command
           Execute a custom adapter-specific command.  The COMMAND string
           is passed as is to the underlying adapter layout handler.
@@ -2866,6 +2832,18 @@ when OpenOCD is configured, in order to be made available at run time.
 
      _Note:_ Either these same adapters and their older versions are
      also supported by *note the hla interface driver: hla_interface.
+
+      -- Config Command: st-link backend (usb | tcp [port])
+          Choose between 'exclusive' USB communication (the default
+          backend) or 'shared' mode using ST-Link TCP server (the
+          default port is 7184).
+
+          _Note:_ ST-Link TCP server is a binary application provided by
+          ST available from ST-LINK server software module
+          (https://www.st.com/en/development-tools/st-link-server.html).
+
+          _Note:_ ST-Link TCP server does not support the SWIM
+          transport.
 
       -- Config Command: st-link serial serial
           Specifies the serial number of the adapter.
@@ -2920,15 +2898,6 @@ when OpenOCD is configured, in order to be made available at run time.
 
           The string will be of the format "DDDD:BB:SS.F" such as
           "0000:65:00.1".
-
- -- Interface Driver: ZY1000
-     This is the Zylin ZY1000 JTAG debugger.
-
-     Note: This defines some driver-specific commands, which are not
-     currently documented here.
-
- -- Command: power ['on'|'off']
-     Turn power switch to target on/off.  No arguments: print status.
 
  -- Interface Driver: bcm2835gpio
      This SoC is present in Raspberry Pi which is a cheap single-board
@@ -3052,7 +3021,7 @@ hla_interface. (in which case the command is 'transport select hla_swd')
 or *note the st-link interface driver: st_link_dap_interface. (in which
 case the command is 'transport select dapdirect_swd').
 
- -- Command: swd newdap ...
+ -- Config Command: swd newdap ...
      Declares a single DAP which uses SWD transport.  Parameters are
      currently the same as "jtag newtap" but this is expected to change.
  -- Command: swd wcr trn prescale
@@ -3548,7 +3517,7 @@ while others (including dots!)  are not.
 10.3 TAP Declaration Commands
 =============================
 
- -- Command: jtag newtap chipname tapname configparams...
+ -- Config Command: jtag newtap chipname tapname configparams...
      Declares a new TAP with the dotted name CHIPNAME.TAPNAME, and
      configured according to the various CONFIGPARAMS.
 
@@ -3920,7 +3889,7 @@ The following commands exist as subcommands of DAP instances:
      working, use the following example with a proper dap name:
           xxx.dap apcsw default
 
- -- Command: $dap_name ti_be_32_quirks ['enable']
+ -- Config Command: $dap_name ti_be_32_quirks ['enable']
      Set/get quirks mode for TI TMS450/TMS570 processors Disabled by
      default
 
@@ -4039,6 +4008,10 @@ command to list them.
           without a CPU, through which bus read and write cycles can be
           generated; it may be useful for working with non-CPU hardware
           behind an AP or during development of support for new CPUs.
+          It's possible to connect a GDB client to this target (the GDB
+          port has to be specified, *Note option -gdb-port:
+          gdbportoverride.), and a fake ARM core will be emulated to
+          comply to GDB remote protocol.
         * 'mips_m4k' - a MIPS core.
         * 'mips_mips64' - a MIPS64 core.
         * 'nds32_v2' - this is an Andes NDS32 v2 core.
@@ -4120,7 +4093,7 @@ to let you write the boot loader into flash, in order to "de-brick" your
 board; or to load programs into external DDR memory without having run
 the boot loader.
 
- -- Command: target create target_name type configparams...
+ -- Config Command: target create target_name type configparams...
      This command creates a GDB debug target that refers to a specific
      JTAG tap.  It enters that target into a list, and creates a new
      command ('TARGET_NAME') which is used for various purposes
@@ -4194,8 +4167,8 @@ the boot loader.
 
         * '-rtos' RTOS_TYPE - enable rtos support for target, RTOS_TYPE
           can be one of 'auto', 'eCos', 'ThreadX', 'FreeRTOS', 'linux',
-          'ChibiOS', 'embKernel', 'mqx', 'uCOS-III', 'nuttx', 'RIOT'
-          *Note RTOS Support: gdbrtossupport.
+          'ChibiOS', 'embKernel', 'mqx', 'uCOS-III', 'nuttx', 'RIOT',
+          'Zephyr' *Note RTOS Support: gdbrtossupport.
 
         * '-defer-examine' - skip target examination at initial JTAG
           chain scan and after a reset.  A manual call to arp_examine is
@@ -5496,7 +5469,7 @@ activate driver-specific commands.
 
           flash bank $_FLASHNAME kinetis 0 0 0 0 $_TARGETNAME
 
-      -- Command: kinetis create_banks
+      -- Config Command: kinetis create_banks
           Configuration command enables automatic creation of additional
           flash banks based on real flash layout of device.  Banks are
           created during device probe.  Use 'flash probe 0' to force
@@ -6043,6 +6016,14 @@ activate driver-specific commands.
           value shown by 'flash banks'.  Note: only Main and Work flash
           regions support Erase operation.
 
+ -- Flash Driver: rp2040
+     Supports RP2040 "Raspberry Pi Pico" microcontroller.  RP2040 is a
+     dual-core device with two CM0+ cores.  Both cores share the same
+     Flash/RAM/MMIO address space.  Non-volatile storage is achieved
+     with an external QSPI flash; a Boot ROM provides helper functions.
+
+          flash bank $_FLASHNAME rp2040_flash $_FLASHBASE $_FLASHSIZE 1 32 $_TARGETNAME
+
  -- Flash Driver: sim3x
      All members of the SiM3 microcontroller family from Silicon
      Laboratories include internal flash and use ARM Cortex-M3 cores.
@@ -6085,10 +6066,11 @@ activate driver-specific commands.
 
  -- Flash Driver: stm32f1x
      All members of the STM32F0, STM32F1 and STM32F3 microcontroller
-     families from STMicroelectronics include internal flash and use ARM
-     Cortex-M0/M3/M4 cores.  The driver automatically recognizes a
-     number of these chips using the chip identification register, and
-     autoconfigures itself.
+     families from STMicroelectronics and all members of the GD32F1x0
+     and GD32F3x0 microcontroller families from GigaDevice include
+     internal flash and use ARM Cortex-M0/M3/M4 cores.  The driver
+     automatically recognizes a number of these chips using the chip
+     identification register, and autoconfigures itself.
 
           flash bank $_FLASHNAME stm32f1x 0 0 0 0 $_TARGETNAME
 
@@ -6291,6 +6273,14 @@ activate driver-specific commands.
 
           flash bank $_FLASHNAME stm32l4x 0 0 0 0 $_TARGETNAME
 
+     If you use OTP (One-Time Programmable) memory define it as a second
+     bank as per the following example.
+          flash bank $_FLASHNAME stm32l4x 0x1FFF7000 0 0 0 $_TARGETNAME
+
+      -- Command: stm32l4x otp num ('enable'|'disable'|'show')
+          Enables or disables OTP write commands for bank NUM.  The NUM
+          parameter is a value shown by 'flash banks'.
+
      Note that some devices have been found that have a flash size
      register that contains an invalid value, to workaround this issue
      you can override the probed value used by the flash driver.
@@ -6342,6 +6332,19 @@ activate driver-specific commands.
           configuring the Write protection Area A for bank 1.  The above
           example set WRP1AR_END=255, WRP1AR_START=0.  This will
           effectively write protect all sectors in flash bank 1.
+
+      -- Command: stm32l4x wrp_info num [device_bank]
+          List the protected areas using WRP. The NUM parameter is a
+          value shown by 'flash banks'.  DEVICE_BANK parameter is
+          optional, possible values 'bank1' or 'bank2', if not
+          specified, the command will display the whole flash protected
+          areas.
+
+          Note: DEVICE_BANK is different from banks created using 'flash
+          bank'.  Devices supported in this flash driver, can have main
+          flash memory organized in single or dual-banks mode.  Thus the
+          usage of DEVICE_BANK is meaningful only in dual-bank mode, to
+          get write protected areas in a specific DEVICE_BANK
 
       -- Command: stm32l4x option_load num
           Forces a re-load of the option byte registers.  Will cause a
@@ -6793,21 +6796,21 @@ commands.
      are four additional commands that are needed to fully configure the
      AT91SAM9 NAND controller.  Two are optional; most boards use the
      same wiring for ALE/CLE:
-      -- Command: at91sam9 cle num addr_line
+      -- Config Command: at91sam9 cle num addr_line
           Configure the address line used for latching commands.  The
           NUM parameter is the value shown by 'nand list'.
-      -- Command: at91sam9 ale num addr_line
+      -- Config Command: at91sam9 ale num addr_line
           Configure the address line used for latching addresses.  The
           NUM parameter is the value shown by 'nand list'.
 
      For the next two commands, it is assumed that the pins have already
      been properly configured for input or output.
-      -- Command: at91sam9 rdy_busy num pio_base_addr pin
+      -- Config Command: at91sam9 rdy_busy num pio_base_addr pin
           Configure the RDY/nBUSY input from the NAND device.  The NUM
           parameter is the value shown by 'nand list'.  PIO_BASE_ADDR is
           the base address of the PIO controller and PIN is the pin
           number.
-      -- Command: at91sam9 ce num pio_base_addr pin
+      -- Config Command: at91sam9 ce num pio_base_addr pin
           Configure the chip enable input to the NAND device.  The NUM
           parameter is the value shown by 'nand list'.  PIO_BASE_ADDR is
           the base address of the PIO controller and PIN is the pin

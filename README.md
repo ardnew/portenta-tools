@@ -73,6 +73,8 @@ It is also possible to use the embedded ST-Link onboard STM32 Nucleo-64/144 devi
 
 ![Embedded ST-Link on Nucleo used to program Portenta bootloader](extra/nucleo-st-link-portenta.jpg)
 
+The only STM32 Discovery board I own ([B-G474E-DPOW1 Discovery kit](https://www.st.com/en/evaluation-tools/b-g474e-dpow1.html)) has both a 14-pin Cortex debug header and 4-pin SWD pads (undocumented in reference manual), as well as an on-board ST-Link v3, but there doesn't seem to be a way to use that ST-Link with external applications. The documentation describes how to physically isolate all ST-Link circuitry from the MCU, but it doesn't describe how to then interface with the ST-Link. Therefore, unlike Nucleo boards, I can't say all Discovery kits with embedded ST-Links can be used for flashing/debugging the Portenta H7.
+
 #### Segger JLink
 
 While I was able to use my Segger JLink EDU Mini to flash new firmware to the device and debug via `gdbserver`, I never managed to use it to reprogram a *corrupted* bootloader, although I have no doubt it is possible. So I do not have instructions at the moment for JLink.
