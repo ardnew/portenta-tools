@@ -4,7 +4,7 @@ update-tools() {
 	pushd "${self_dir}" &> /dev/null 
 	git submodule sync --recursive
 	git pull --recurse-submodules
-	rsync -avh --info=progress2 --ignore-existing "${mbed_path}/" "${arduino_mbed_path}/"
+#	rsync -avh --info=progress2 --ignore-existing "${mbed_path}/" "${arduino_mbed_path}/"
 	popd &> /dev/null
 }
 
