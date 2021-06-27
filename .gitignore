@@ -1,2 +1,7 @@
 mbed/arduino/
 **/null.d
+example/**/*.elf
+example/**/*.bin
+example/**/*.hex
+example/**/*.map
+.theia
