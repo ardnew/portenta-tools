@@ -14,8 +14,7 @@ if [[ ! -f "${boot_elf}" ]]; then
 	exit 1
 fi
 
-#openocd_path="${tools_path}/openocd"
-openocd_path="/usr/local/openocd"
+openocd_path="${tools_path}/openocd"
 openocd_bin="${openocd_path}/bin/openocd"
 openocd_src="${openocd_path}/share/openocd/scripts"
 openocd_interface='interface/jlink.cfg'
