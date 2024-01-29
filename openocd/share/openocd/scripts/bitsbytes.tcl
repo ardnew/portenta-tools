@@ -1,8 +1,10 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+
 #----------------------------------------
 # Purpose - Create some $BIT variables
 #           Create $K and $M variables
 #          and some bit field extraction variables.
-# Creat helper variables ...
+# Create helper variables ...
 #    BIT0.. BIT31
 
 for { set x 0  } { $x < 32 } { set x [expr {$x + 1}]} {

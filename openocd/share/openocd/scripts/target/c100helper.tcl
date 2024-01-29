@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
 
 proc helpC100 {} {
     echo "List of useful functions for C100 processor:"
@@ -13,25 +14,23 @@ proc helpC100 {} {
     echo "10) showArmClk:        will show current config registers for Arm Bus Clock"
     echo "11) setupArmClk:       will setup Amba Bus Clock=450MHz"
     echo "12) ooma_board_detect: will show which version of Telo you have"
-    echo "13) setupDDR2:         will configure DDR2 controller, you must have PLLs configureg"
+    echo "13) setupDDR2:         will configure DDR2 controller, you must have PLLs configured"
     echo "14) showDDR2:          will show DDR2 config registers"
     echo "15) showWatchdog:      will show current register config for watchdog"
     echo "16) reboot:            will trigger watchdog and reboot Telo (hw reset)"
     echo "17) bootNOR:           will boot Telo from NOR"
-    echo "18) setupUART0:        will configure UART0 for 115200 8N1, PLLs have to be confiured"
+    echo "18) setupUART0:        will configure UART0 for 115200 8N1, PLLs have to be configured"
     echo "19) putcUART0:         will print a character on UART0"
     echo "20) putsUART0:         will print a string on UART0"
-    echo "21) trainDDR2:          will run DDR2 training program"
-    echo "22) flashUBOOT:        will prgram NOR sectors 0-3 with u-boot.bin"
+    echo "21) trainDDR2:         will run DDR2 training program"
+    echo "22) flashUBOOT:        will program NOR sectors 0-3 with u-boot.bin"
 }
 
 source [find mem_helper.tcl]
 
 # read a 64-bit register (memory mapped)
 proc mr64bit {reg} {
-    set value ""
-    mem2array value 32 $reg 2
-    return $value
+    return [read_memory $reg 32 2]
 }
 
 
@@ -117,19 +116,19 @@ proc showAmbaClk {} {
     set PLL_CLK_BYPASS	             [regs PLL_CLK_BYPASS]
 
     echo [format "CLKCORE_AHB_CLK_CNTRL       (0x%x): 0x%x" $CLKCORE_AHB_CLK_CNTRL [mrw $CLKCORE_AHB_CLK_CNTRL]]
-    mem2array value 32 $CLKCORE_AHB_CLK_CNTRL 1
+    set value [read_memory $CLKCORE_AHB_CLK_CNTRL 32 1]
     # see if the PLL is in bypass mode
-    set bypass [expr {($value(0) & $PLL_CLK_BYPASS) >> 24}]
+    set bypass [expr {($value & $PLL_CLK_BYPASS) >> 24}]
     echo [format "PLL bypass bit: %d" $bypass]
     if {$bypass == 1} {
 	echo [format "Amba Clk is set to REFCLK: %d (MHz)" [expr {$CFG_REFCLKFREQ/1000000}]]
     } else {
 	# nope, extract x,y,w and compute the PLL output freq.
-	set x [expr {($value(0) & 0x0001F0000) >> 16}]
+	set x [expr {($value & 0x0001F0000) >> 16}]
 	echo [format "x: %d" $x]
-	set y [expr {($value(0) & 0x00000007F)}]
+	set y [expr {($value & 0x00000007F)}]
 	echo [format "y: %d" $y]
-	set w [expr {($value(0) & 0x000000300) >> 8}]
+	set w [expr {($value & 0x000000300) >> 8}]
 	echo [format "w: %d" $w]
 	echo [format "Amba PLL Clk: %d (MHz)" [expr {($CFG_REFCLKFREQ * $y / (($w + 1) * ($x + 1) * 2))/1000000}]]
     }
@@ -192,19 +191,19 @@ proc showArmClk {} {
     set PLL_CLK_BYPASS	        [regs PLL_CLK_BYPASS]
 
     echo [format "CLKCORE_ARM_CLK_CNTRL       (0x%x): 0x%x" $CLKCORE_ARM_CLK_CNTRL [mrw $CLKCORE_ARM_CLK_CNTRL]]
-    mem2array value 32 $CLKCORE_ARM_CLK_CNTRL 1
+    set value [read_memory $CLKCORE_ARM_CLK_CNTRL 32 1]
     # see if the PLL is in bypass mode
-    set bypass [expr {($value(0) & $PLL_CLK_BYPASS) >> 24}]
+    set bypass [expr {($value & $PLL_CLK_BYPASS) >> 24}]
     echo [format "PLL bypass bit: %d" $bypass]
     if {$bypass == 1} {
 	echo [format "Amba Clk is set to REFCLK: %d (MHz)" [expr {$CFG_REFCLKFREQ/1000000}]]
     } else {
 	# nope, extract x,y,w and compute the PLL output freq.
-	set x [expr {($value(0) & 0x0001F0000) >> 16}]
+	set x [expr {($value & 0x0001F0000) >> 16}]
 	echo [format "x: %d" $x]
-	set y [expr {($value(0) & 0x00000007F)}]
+	set y [expr {($value & 0x00000007F)}]
 	echo [format "y: %d" $y]
-	set w [expr {($value(0) & 0x000000300) >> 8}]
+	set w [expr {($value & 0x000000300) >> 8}]
 	echo [format "w: %d" $w]
 	echo [format "Arm PLL Clk: %d (MHz)" [expr {($CFG_REFCLKFREQ * $y / (($w + 1) * ($x + 1) * 2))/1000000}]]
     }
